@@ -1,0 +1,59 @@
+version: "3.8"
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: "mysql"
+    restart: always
+    environment: 
+      MYSQL_ROOT_PASSWORD: root_password1
+      MYSQL_DATABASE: db
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: password1
+    ports: 
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./db/db.cnf:/etc/mysql/my.cnf
+
+  #api:
+  #  container_name: api
+  #  restart: always
+  #  command: api/local_run.sh
+  #  build: 
+  #    context: .
+  #    dockerfile: ./api/Dockerfile
+  #  ports:
+  #    - "8000:8000"
+  #  environment:
+  #    MYSQL_HOSTNAME: db.hyetheater.com
+  #    MYSQL_DATABASE: db
+  #    MYSQL_USER: admin
+  #    MYSQL_PASSWORD: password1
+  #  volumes:
+  #    - .:/api
+  #  depends_on:
+  #    - "db"
+
+  #client:
+  #  container_name: react-app
+  #  build:
+  #    context: ./ui
+  #    dockerfile: Dockerfile
+  #  command: ./local_run.sh
+  #  volumes:
+  #    - './ui:/app'
+  #    - '~/.npm:/root/.npm'
+  #  ports:
+  #    - '3000:3000'
+  #  depends_on:
+  #    - "db"
+  #  environment:
+  #    - NODE_ENV=development
+  #    - CHOKIDAR_USEPOLLING=true
+  #    - HOST_URL=http://127.0.0.1:5000
+
+volumes:
+  mysql-data: {}
+
