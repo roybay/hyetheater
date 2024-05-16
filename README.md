@@ -21,7 +21,7 @@ docker exec -it mysql mysql --user=admin --password=password1
 
 Clean the persistent valume
 ```bash
-docker ps -a  --format json | gojq '{ID, Image}' | gojq -s . | gojq -r '.[] | select(.Image == "mysql:8.0") | .ID' | xargs docker rm; docker volume rm hyetheater_mysql-data
+docker ps -a  --format json | gojq '{ID, Image}' | gojq -s . | gojq -r '.[] | select(.Image == "hyetheater-db" or .Image == "hyetheater-api" or .Image == "hyetheater-ui") | .ID' | xargs docker rm; docker volume rm hyetheater_mysql-data
 ```
 
 # UI

@@ -2,58 +2,62 @@ version: "3.8"
 
 services:
   db:
-    image: mysql:8.0
-    container_name: "mysql"
+    container_name: db
+    hostname: db.hyetheater.com
     restart: always
+    build: 
+      context: ./db
+      dockerfile: Dockerfile
+    ports: 
+      - "3306:3306"
     environment: 
       MYSQL_ROOT_PASSWORD: root_password1
       MYSQL_DATABASE: db
       MYSQL_USER: admin
       MYSQL_PASSWORD: password1
-    ports: 
-      - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./db/db.cnf:/etc/mysql/my.cnf
+  
+  api:
+    container_name: api
+    hostname: api.hyetheater.com
+    restart: always
+    command: ./local_run.sh
+    build: 
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "8000:5000"
+    environment:
+      MYSQL_HOSTNAME: db.hyetheater.com
+      MYSQL_DATABASE: db
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: password1
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - "db"
 
-  #api:
-  #  container_name: api
-  #  restart: always
-  #  command: api/local_run.sh
-  #  build: 
-  #    context: .
-  #    dockerfile: ./api/Dockerfile
-  #  ports:
-  #    - "8000:8000"
-  #  environment:
-  #    MYSQL_HOSTNAME: db.hyetheater.com
-  #    MYSQL_DATABASE: db
-  #    MYSQL_USER: admin
-  #    MYSQL_PASSWORD: password1
-  #  volumes:
-  #    - .:/api
-  #  depends_on:
-  #    - "db"
-
-  #client:
-  #  container_name: react-app
-  #  build:
-  #    context: ./ui
-  #    dockerfile: Dockerfile
-  #  command: ./local_run.sh
-  #  volumes:
-  #    - './ui:/app'
-  #    - '~/.npm:/root/.npm'
-  #  ports:
-  #    - '3000:3000'
-  #  depends_on:
-  #    - "db"
-  #  environment:
-  #    - NODE_ENV=development
-  #    - CHOKIDAR_USEPOLLING=true
-  #    - HOST_URL=http://127.0.0.1:5000
-
+  ui:
+    container_name: ui
+    hostname: app.hyetheater.com
+    restart: always
+    command: ./local_run.sh
+    build:
+      context: ./ui
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+    volumes:
+      - './ui:/app'
+      - '~/.npm:/root/.npm'
+    depends_on:
+      - "api"
+    
 volumes:
   mysql-data: {}
 
