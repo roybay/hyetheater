@@ -17,7 +17,7 @@ docker-compose up
 It is located on db folder
 init.sql file is running sql commanda when the mysql inital configuration. 
 
-![DB Architecture](https://github.com/roybay/hyetheater/blob/master/db_design.pdf?raw=true)
+![DB Architecture](https://github.com/roybay/hyetheater/blob/master/db_design.png?raw=true)
 
 Connect to MySQL
 ```bash
