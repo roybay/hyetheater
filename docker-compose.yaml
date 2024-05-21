@@ -19,25 +19,27 @@ services:
       - mysql-data:/var/lib/mysql
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./db/db.cnf:/etc/mysql/my.cnf
+  
   api:
     container_name: api
     hostname: api.hyetheater.com
     restart: always
-    command: ./local_run.sh
+    command: /app/local_run.sh
     build: 
-      context: ./api
+      context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "8000:5000"
+      - "8000:8000"
     environment:
       MYSQL_HOSTNAME: db.hyetheater.com
       MYSQL_DATABASE: db
       MYSQL_USER: admin
       MYSQL_PASSWORD: password1
     volumes:
-      - .:/usr/src/app
+      - ./backend:/app
     depends_on:
       - "db"
+  
   ui:
     container_name: ui
     hostname: app.hyetheater.com
@@ -55,7 +57,7 @@ services:
       - '~/.npm:/root/.npm'
     depends_on:
       - "api"
-    
+   
 volumes:
   mysql-data: {}
 
