@@ -9,7 +9,7 @@ function App(){
   }])
 
   useEffect(() => {
-    fetch("/members").then(
+    fetch("/api/v1/roles").then(
       res => res.json()
     ).then(
       data => {
@@ -21,11 +21,12 @@ function App(){
 
   return (
     <div>
-      {(typeof data.members === 'undefined') ? (
+      <h3>Roles</h3>
+      {(typeof data.roles === 'undefined') ? (
         <p>Loading...</p>
       ) : (
-        data.members.map((member, i) => (
-          <p key={i}>{member}</p>
+        data.roles.map((role, i) => (
+          <p key={i}>{role}</p>
         )
       )
       )}

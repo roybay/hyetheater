@@ -32,7 +32,7 @@ docker ps -a  --format json | gojq '{ID, Image}' | gojq -s . | gojq -r '.[] | se
 
 ## API
 in api Folder
-pip3 install Flask
+pip3 install fastapi
 
 Run python server
 ```bash
@@ -43,7 +43,8 @@ export MYSQL_PASSWORD=password1
 
 python3 setup.py
 ```
-Goto: http://api.hyetheater.com:5000/members
+Docs: http://api.hyetheater.com:8000/docs
+Api : http://api.hyetheater.com:8000/api/v1/roles
 
 or
 

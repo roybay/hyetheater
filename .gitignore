@@ -1,1 +1,2 @@
 db/db.cnf
+backend/api/__pycache__/*
