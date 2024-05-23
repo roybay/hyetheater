@@ -21,6 +21,11 @@ class UpdateRoleName(BaseModel):
     new_name: str
 
 
+class DeleteRoleName(BaseModel):
+    delete_role: str
+
+
+
 @router.get("/api/v1/roles", tags=["role"], response_model=GetRoleName)
 @db_session
 def get_role_names():
@@ -49,11 +54,11 @@ def update_role(role_name: str, role: UpdateRoleName):
     return {"name": existing_role.name}
 
 
-@router.delete("/api/v1/role/{role_name}", tags=["role"], response_model=RoleName)  # noqa: E501
+@router.delete("/api/v1/role/{role_name}", tags=["role"], response_model=DeleteRoleName)  # noqa: E501
 @db_session
 def delete_role(role_name: str):
     existing_role = Role.get(name=role_name)
     if not existing_role:
-        raise HTTPException(status_code=404, detail="Role not found")
+        raise HTTPException(status_code=404, detail=role_name+" NOT found")  # noqa: E501
     existing_role.delete()
-    return {"name": "Role deleted"}
+    return {"delete_role": existing_role.name}

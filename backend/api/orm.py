@@ -101,14 +101,15 @@ class Script(db.Entity):
 
 
 def connect_db():
-    try:
-        db.bind(
-            provider='mysql',
-            host=os.environ['MYSQL_HOSTNAME'],
-            user=os.environ['MYSQL_USER'],
-            passwd=os.environ['MYSQL_PASSWORD'],
-            db=os.environ['MYSQL_DATABASE']
-        )
-        db.generate_mapping(create_tables=True)
-    except KeyError:
-        print("one or more environment variables is/are not found")
+    if not db.provider:
+        try:
+            db.bind(
+                provider='mysql',
+                host=os.environ['MYSQL_HOSTNAME'],
+                user=os.environ['MYSQL_USER'],
+                passwd=os.environ['MYSQL_PASSWORD'],
+                db=os.environ['MYSQL_DATABASE']
+            )
+            db.generate_mapping(create_tables=True)
+        except KeyError as e:
+            print(f"Environment variable {e} is not found")
