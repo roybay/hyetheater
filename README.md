@@ -40,18 +40,10 @@ export MYSQL_HOSTNAME=db.hyetheater.com
 export MYSQL_DATABASE=db
 export MYSQL_USER=admin
 export MYSQL_PASSWORD=password1
-
 python3 setup.py
 ```
-Docs: http://api.hyetheater.com:8000/docs
-Api : http://api.hyetheater.com:8000/api/v1/roles
+[Api Documents](http://api.hyetheater.com:8000/docs)
 
-or
-
-Connect via docker-compose
-```bash
-curl http://api.hyetheater.com:8000/members
-```
 
 ## UI
 Imital React App cration. 
