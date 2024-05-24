@@ -1,8 +1,11 @@
 import os
 from datetime import datetime, date
 from pony.orm import Database, Required, PrimaryKey, Set, LongStr, Optional
+from passlib.context import CryptContext
+
 
 db = Database()
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 class User(db.Entity):

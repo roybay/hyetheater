@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from api import role
+from api import role, user
 
 
 app = FastAPI(
@@ -9,10 +9,5 @@ app = FastAPI(
     # Hide Schema
 )
 
-
 app.include_router(role.router)
-
-
-@app.get("/api/v1/test", tags=["test"])
-def get_test():
-    return {"test": "test_return"}
+app.include_router(user.router)

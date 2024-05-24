@@ -40,10 +40,19 @@ export MYSQL_HOSTNAME=db.hyetheater.com
 export MYSQL_DATABASE=db
 export MYSQL_USER=admin
 export MYSQL_PASSWORD=password1
+export SECRET_KEY="encyption_secret_key"
+export ALGORITHM="HS256"
+export ACCESS_TOKEN_EXPIRE_MINUTES=30
+
 python3 setup.py
 ```
 [Api Documents](http://api.hyetheater.com:8000/docs)
 
+### PYtest
+In the project root:
+```bash
+pytest
+```
 
 ## UI
 Imital React App cration. 

@@ -16,3 +16,5 @@ PyMySQL==1.1.0
 typing_extensions==4.11.0
 uvicorn==0.29.0
 Werkzeug==3.0.3
+python-jose==3.3.0
+passlib==1.7.4
